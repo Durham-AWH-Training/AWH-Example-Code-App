@@ -1,0 +1,53 @@
+# Example PHP Deployment to AWH
+
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+trigger:
+- main
+
+pool:
+  name: Default
+  demands:
+  - Agent.Name -equals vmlsha1
+
+resources:
+- repo: self
+
+variables:
+  - name: appName
+    value: 'duuks-samanthafinnigan01' # Update this value.
+  - name: webAppResourceGroupName
+    value: 'du-uks-awh-training' # Update this value.
+  - name: runtimeStack
+    value: 'PHP|7.4' # Update this value.
+
+steps:
+  - task: ArchiveFiles@2
+    displayName: "Archive Files"
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      replaceExistingArchive: true
+
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      appType: 'webAppLinux'
+      deployToSlotOrASE: true
+      SlotName: 'production'
+      WebAppName: '$(appName)'
+      ResourceGroupName: '$(appResourceGroupName)'
+      azureSubscription: '$(azureSubscription)'
+      RuntimeStack: '$(runtimeStack)'
+      packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      ScriptType: 'Inline Script'
+      InlineScript: |
+        set -e
+        export WORKDIR=$(pwd)
+        echo "Working directory is ${WORKDIR}"
+        
+        ls -lA | head
+        echo "$(ls -lA | wc -l) files total"
