@@ -19,7 +19,7 @@ variables:
     value: 'svc-con-awh-01'
   - name: appName
     value: 'duuks-samanthafinnigan01' # Update this value.
-  - name: webAppResourceGroupName
+  - name: appResourceGroupName
     value: 'du-uks-awh-training' # Update this value.
   - name: runtimeStack
     value: 'PHP|7.4' # Update this value.
