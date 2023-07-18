@@ -14,7 +14,9 @@ pool:
 resources:
 - repo: self
 
-variables:
+variables::
+  - name: azureSubscription
+    value: 'svc-con-awh-01'
   - name: appName
     value: 'duuks-samanthafinnigan01' # Update this value.
   - name: webAppResourceGroupName
