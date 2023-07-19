@@ -18,7 +18,7 @@ variables:
   - name: azureSubscription
     value: 'svc-con-awh-01'
   - name: appName
-    value: 'duuks-samanthafinnigan01' # Update this value.
+    value: 'duuksawhase-training-code01' # Update this value.
   - name: appResourceGroupName
     value: 'du-uks-awh-training' # Update this value.
   - name: runtimeStack
